@@ -11,17 +11,22 @@ class HomeScreen extends StatelessWidget {
         title: const Text('DEEPEN Hub'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Welcome to DEEPEN Hub!',
               style: TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 8),
             Text(
-              'Your created apps will appear here.',
+              'Publish your apps for free!',
+              style: TextStyle(fontSize: 18, color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Your published apps will appear here.',
               style: TextStyle(fontSize: 16),
             ),
           ],
@@ -34,8 +39,8 @@ class HomeScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const CreateAppScreen()),
           );
         },
-        tooltip: 'Create App',
-        child: const Icon(Icons.add),
+        tooltip: 'Publish App',
+        child: const Icon(Icons.publish),
       ),
     );
   }

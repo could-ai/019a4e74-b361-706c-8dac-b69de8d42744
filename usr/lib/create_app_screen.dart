@@ -11,16 +11,17 @@ class _CreateAppScreenState extends State<CreateAppScreen> {
   final _formKey = GlobalKey<FormState>();
   String _appName = '';
   String _appDescription = '';
+  String _appUrl = '';
 
-  void _createApp() {
+  void _publishApp() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Here you would typically handle the app creation logic,
+      // Here you would typically handle the app publishing logic,
       // like saving it to a database.
       // For now, we'll just pop the screen and maybe show a snackbar.
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('App "$_appName" created!')),
+        SnackBar(content: Text('App "$_appName" published!')),
       );
     }
   }
@@ -29,7 +30,7 @@ class _CreateAppScreenState extends State<CreateAppScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create New App'),
+        title: const Text('Publish New App'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -70,13 +71,32 @@ class _CreateAppScreenState extends State<CreateAppScreen> {
                   _appDescription = value!;
                 },
               ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'App URL (e.g., GitHub repo, download link)',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an app URL';
+                  }
+                  if (!(Uri.tryParse(value)?.isAbsolute ?? false)) {
+                    return 'Please enter a valid URL';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _appUrl = value!;
+                },
+              ),
               const SizedBox(height: 30),
               ElevatedButton(
-                onPressed: _createApp,
+                onPressed: _publishApp,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Create App'),
+                child: const Text('Publish App'),
               ),
             ],
           ),
